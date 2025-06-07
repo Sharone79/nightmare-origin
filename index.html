@@ -77,9 +77,10 @@
 <header>
   <h1>나이트메어 오리진</h1>
   <nav>
-    <a href="#">나이트메어</a>
+    <a href="https://m.comic.naver.com/challenge/list?titleId=806752" target="_blank">나이트메어</a>
     <a href="#" onclick="toggleGallery(); return false;">미스터리 갤러리</a>
-  </nav>
+  <a href="#" onclick="toggleEllaGallery(); return false;">엘라 갤러리</a>
+</nav>
 </header>
 
 <section id="mystery-gallery">
@@ -153,6 +154,40 @@
 
     form.reset();
   });
+</script>
+
+
+<section id="ella-gallery" style="display: none; padding: 40px 20px; max-width: 800px; margin: auto;">
+  <h2 style="font-size: 2rem; margin-bottom: 20px;">엘라 갤러리</h2>
+  <input type="file" id="ella-image" accept="image/*"><br><br>
+  <div id="ella-gallery-display" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+</section>
+
+<script>
+  function toggleEllaGallery() {
+    const gallery = document.getElementById('ella-gallery');
+    gallery.style.display = (gallery.style.display === 'block') ? 'none' : 'block';
+  }
+
+  const ellaInput = document.getElementById('ella-image');
+  const ellaDisplay = document.getElementById('ella-gallery-display');
+
+  if (ellaInput) {
+    ellaInput.addEventListener('change', function() {
+      const files = ellaInput.files;
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.maxWidth = '200px';
+          img.style.border = '1px solid #fff';
+          ellaDisplay.appendChild(img);
+        };
+        reader.readAsDataURL(files[i]);
+      }
+    });
+  }
 </script>
 
 </body>
