@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나이트메어 오리진</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Pretendard', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 40px 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 12vw;
+      animation: glow 2s infinite ease-in-out;
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #fff; }
+      50% { text-shadow: 0 0 20px #f00, 0 0 30px #ff0; }
+      100% { text-shadow: 0 0 5px #fff; }
+    }
+    nav {
+      margin-top: 20px;
+    }
+    nav a {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 30px;
+      border: 2px solid red;
+      border-radius: 15px;
+      color: red;
+      text-decoration: none;
+      font-size: 1.5rem;
+      box-shadow: 0 0 20px red;
+    }
+    section#mystery-gallery {
+      display: none;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    #gallery-posts div {
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 10px 0;
+      position: relative;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #f00;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>나이트메어 오리진</h1>
+  <nav>
+    <a href="#">나이트메어</a>
+    <a href="#" onclick="toggleGallery(); return false;">미스터리 갤러리</a>
+  </nav>
+</header>
+
+<section id="mystery-gallery">
+  <h2>미스터리 갤러리</h2>
+  <form id="gallery-form">
+    <input type="text" id="post-title" placeholder="제목" required><br>
+    <textarea id="post-content" placeholder="내용" required></textarea><br>
+    <input type="file" id="post-image" accept="image/*"><br>
+    <input type="url" id="youtube-link" placeholder="YouTube 링크 (선택)"><br>
+    <input type="password" id="delete-password" placeholder="비밀번호 (삭제용)" required><br>
+    <button type="submit">게시</button>
+  </form>
+  <div id="gallery-posts"></div>
+</section>
+
+<script>
+  function toggleGallery() {
+    const gallery = document.getElementById('mystery-gallery');
+    gallery.style.display = (gallery.style.display === 'block') ? 'none' : 'block';
+  }
+
+  const form = document.getElementById('gallery-form');
+  const postsDiv = document.getElementById('gallery-posts');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const title = document.getElementById('post-title').value;
+    const content = document.getElementById('post-content').value;
+    const image = document.getElementById('post-image').files[0];
+    const youtube = document.getElementById('youtube-link').value;
+    const password = document.getElementById('delete-password').value;
+
+    const post = document.createElement('div');
+    post.setAttribute('data-password', password);
+    post.innerHTML = "<h3>" + title + "</h3><p>" + content + "</p>";
+
+    if (youtube) {
+      post.innerHTML += "<p><a href='" + youtube + "' target='_blank'>YouTube 링크</a></p>";
+    }
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "삭제";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.onclick = function() {
+      const input = prompt("비밀번호를 입력하세요:");
+      const savedPassword = post.getAttribute('data-password');
+      if (input === savedPassword) {
+        post.remove();
+      } else {
+        alert("비밀번호가 틀렸습니다.");
+      }
+    };
+
+    if (image) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = "100%";
+        img.style.marginTop = "10px";
+        post.appendChild(img);
+        post.appendChild(deleteBtn);
+        postsDiv.appendChild(post);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      post.appendChild(deleteBtn);
+      postsDiv.appendChild(post);
+    }
+
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
