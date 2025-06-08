@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>나이트메어 오리진</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
     html, body {
       margin: 0;
       padding: 0;
@@ -51,6 +52,12 @@
     }
 
     .nav-box a {
+      font-family: 'Creepster', 'Courier New', monospace;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid crimson;
+      color: crimson;
+      text-shadow: 0 0 10px red, 0 0 15px darkred;
+
       padding: 12px 24px;
       border: 2px solid red;
       border-radius: 12px;
@@ -69,13 +76,45 @@
 
     @media (min-width: 1024px) {
       h1 { font-size: 64px; }
-      .nav-box a { font-size: 1.5rem; }
+      .nav-box a {
+      font-family: 'Creepster', 'Courier New', monospace;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid crimson;
+      color: crimson;
+      text-shadow: 0 0 10px red, 0 0 15px darkred;
+ font-size: 1.5rem; }
     }
   
     @media (min-width: 1024px) {
       .nav-box {
         margin-top: 400px;
       }
+    }
+    
+    @keyframes titleGlow {
+      0% { color: black; }
+      50% { color: crimson; }
+      100% { color: darkred; }
+    }
+
+    h1 {
+      animation: titleGlow 3s infinite alternate;
+    }
+
+    @keyframes bleed {
+      0% {
+        text-shadow: 0 0 crimson;
+      }
+      50% {
+        text-shadow: 0 4px 6px crimson, 0 8px 10px darkred;
+      }
+      100% {
+        text-shadow: 0 10px 20px darkred, 0 15px 25px #000;
+      }
+    }
+
+    .nav-box a {
+      animation: bleed 2.5s infinite alternate;
     }
     </style>
 </head>
@@ -90,7 +129,7 @@
     <a href="#" onclick="toggleEllaGallery(); return false;">엘라 갤러리</a>
   </div>
 
-  <section id="mystery-gallery" style="display:none; padding: 40px 20px; max-width: 800px; margin: auto;">
+  <section id="mystery-gallery" style="display:none; padding: 60px 5vw; max-width: 100%; margin: auto;">
     <h2 style="font-size: 2rem; color: white;">미스터리 갤러리</h2>
     <form id="gallery-form">
       <input type="text" id="post-title" placeholder="제목" required><br>
