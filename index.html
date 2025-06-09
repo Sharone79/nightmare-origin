@@ -11,22 +11,22 @@
       box-sizing: border-box;
     }
     body {
-      background: url('ella_main_bg.png') no-repeat center center fixed;
+      background: url('ella_main_bg.png') no-repeat center top fixed;
       background-size: cover;
       font-family: 'Arial', sans-serif;
-      color: white;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: white;
     }
     .title {
-      margin-top: 50px;
+      position: absolute;
+      top: 60px;
+      width: 100%;
       text-align: center;
     }
     .title h1 {
-      font-size: 4em;
+      font-size: 3.8em;
       text-shadow: 3px 3px 6px black;
     }
     .title h2 {
@@ -36,22 +36,22 @@
       text-shadow: 2px 2px 4px black;
     }
     .menu {
-      margin-bottom: 60px;
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
+      position: absolute;
+      top: 340px;
+      width: 100%;
+      text-align: center;
     }
     .menu a {
-      padding: 15px 30px;
+      display: inline-block;
+      margin: 0 15px;
+      padding: 15px 25px;
       border: 2px solid red;
       border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
       color: red;
-      background-color: rgba(0,0,0,0.6);
       font-size: 1.1em;
       font-weight: bold;
       text-decoration: none;
-      text-align: center;
       box-shadow: 0 0 10px red;
       transition: all 0.3s ease;
     }
