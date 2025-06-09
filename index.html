@@ -2,47 +2,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>나이트메어 오리진</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background: url('ella_main_bg.png') no-repeat center top fixed;
+      box-sizing: border-box;
+    }
+    body {
+      background: url('ella_main_bg.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Arial', sans-serif;
-    }
-    .title-wrapper {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .title-wrapper h1 {
-      font-size: 4em;
       color: white;
-      text-shadow: 3px 3px 6px black;
-      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
-    .title-wrapper h2 {
-      font-size: 2.5em;
+    .title {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .title h1 {
+      font-size: 4em;
+      text-shadow: 3px 3px 6px black;
+    }
+    .title h2 {
+      font-size: 2em;
       color: red;
+      margin-top: 10px;
       text-shadow: 2px 2px 4px black;
-      margin: 10px 0 30px;
     }
     .menu {
+      margin-bottom: 60px;
       display: flex;
-      justify-content: center;
-      gap: 20px;
+      gap: 30px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .menu a {
       padding: 15px 30px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: red;
       border: 2px solid red;
-      border-radius: 12px;
-      text-decoration: none;
-      font-size: 1.2em;
+      border-radius: 10px;
+      color: red;
+      background-color: rgba(0,0,0,0.6);
+      font-size: 1.1em;
       font-weight: bold;
+      text-decoration: none;
+      text-align: center;
       box-shadow: 0 0 10px red;
       transition: all 0.3s ease;
     }
@@ -54,7 +63,7 @@
   </style>
 </head>
 <body>
-  <div class="title-wrapper">
+  <div class="title">
     <h1>ELLA</h1>
     <h2>나이트메어 오리진</h2>
   </div>
