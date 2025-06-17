@@ -945,6 +945,159 @@ document.addEventListener("keydown", function(e) {
 });
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ELLA: JS 수동 애니메이션 방식 -->
+<style>
+#tree-bird-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+#tree-bird-container img {
+  width: 300px;
+  max-width: 80vw;
+}
+#heart-grow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%) scale(0.1);
+  background: url('heart.svg') no-repeat center center;
+  background-size: contain;
+  opacity: 0;
+  z-index: 10000;
+}
+</style>
+<div id="tree-bird-container">
+  <img src="bird_on_tree.png" alt="Bird on Tree">
+</div>
+<div id="heart-grow"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const input = document.getElementById('secret-input');
+  const container = document.getElementById('tree-bird-container');
+  const heart = document.getElementById('heart-grow');
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && input.value.trim() === '나무 새랑해') {
+      container.style.display = "flex";
+      heart.style.display = "block";
+
+      // 수동 애니메이션
+      let start = null;
+      function animateHeart(timestamp) {
+        if (!start) start = timestamp;
+        const progress = (timestamp - start) / 1000; // 초 단위
+
+        if (progress < 3) {
+          const scale = 0.1 + progress * 3; // 점점 커짐
+          const opacity = 1 - progress / 3; // 점점 사라짐
+          heart.style.transform = `translate(-50%, -50%) scale(${scale})`;
+          heart.style.opacity = opacity;
+          requestAnimationFrame(animateHeart);
+        } else {
+          heart.style.display = "none";
+          container.style.display = "none";
+          input.value = "";
+        }
+      }
+
+      requestAnimationFrame(animateHeart);
+    }
+  });
+});
+</script>
+
+
+<!-- ELLA: 나무 새랑해 - JS로 하트 화면 전체 확대 -->
+<style>
+#tree-bird-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+#tree-bird-container img {
+  width: 300px;
+  max-width: 80vw;
+}
+#heart-grow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%) scale(0.1);
+  background: url('heart.svg') no-repeat center center;
+  background-size: contain;
+  opacity: 0;
+  z-index: 10000;
+}
+</style>
+<div id="tree-bird-container">
+  <img src="bird_on_tree.png" alt="Bird on Tree">
+</div>
+<div id="heart-grow"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const input = document.getElementById('secret-input');
+  const container = document.getElementById('tree-bird-container');
+  const heart = document.getElementById('heart-grow');
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && input.value.trim() === '나무 새랑해') {
+      container.style.display = "flex";
+      heart.style.display = "block";
+
+      let start = null;
+      function animateHeart(timestamp) {
+        if (!start) start = timestamp;
+        const progress = (timestamp - start) / 1000;
+
+        if (progress < 3) {
+          const scale = 0.1 + progress * 6.5; // 최종 scale 약 20
+          const opacity = 1 - progress / 3;
+          heart.style.transform = `translate(-50%, -50%) scale(${scale})`;
+          heart.style.opacity = opacity;
+          requestAnimationFrame(animateHeart);
+        } else {
+          heart.style.display = "none";
+          container.style.display = "none";
+          input.value = "";
+        }
+      }
+
+      requestAnimationFrame(animateHeart);
+    }
+  });
+});
+</script>
+
 </body>
 </html>
 <!-- 🔥 화요정 이스터에그 UI (독립 삽입) -->
