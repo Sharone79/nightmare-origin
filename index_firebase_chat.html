@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>나무 새랑해 실시간 채팅</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f4ff; padding: 20px; }
+    #chat-box {
+      width: 100%%; max-width: 500px; margin: auto;
+      border: 1px solid #ccc; border-radius: 10px;
+      background: white; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    #messages { height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background: #fafafa; }
+    #input-area { display: flex; }
+    #input-area input { flex: 1; padding: 10px; font-size: 14px; }
+    #input-area button { padding: 10px; background: #6ea0f6; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="chat-box">
+    <h2>🌳 나무 새랑해 실시간 채팅</h2>
+    <div id="messages"></div>
+    <div id="input-area">
+      <input id="messageInput" placeholder="메시지를 입력하세요..." />
+      <button onclick="sendMessage()">전송</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_6Hj-EXAMPLE-dummy",
+      authDomain: "ella-chat-demo.firebaseapp.com",
+      databaseURL: "https://ella-chat-demo-default-rtdb.firebaseio.com",
+      projectId: "ella-chat-demo",
+      storageBucket: "ella-chat-demo.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:example"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const messagesRef = db.ref("messages");
+
+    const nickname = "익명의 새랑해_" + Math.floor(Math.random() * 1000);
+
+    messagesRef.on("child_added", snapshot => {
+      const msg = snapshot.val();
+      const msgDiv = document.createElement("div");
+      msgDiv.textContent = msg.name + ": " + msg.text;
+      document.getElementById("messages").appendChild(msgDiv);
+      document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+    });
+
+    function sendMessage() {
+      const input = document.getElementById("messageInput");
+      const text = input.value.trim();
+      if (text) {
+        messagesRef.push({ name: nickname, text: text });
+        input.value = "";
+      }
+    }
+
+    // 자동 엘라 메시지
+    setTimeout(() => {
+      messagesRef.push({ name: "엘라", text: "안녕하세요~ 나무 새랑해의 숲에 오신 걸 환영해요! 🌳🐥" });
+    }, 1000);
+  </script>
+</body>
+</html>
