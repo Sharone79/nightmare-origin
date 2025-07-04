@@ -345,9 +345,9 @@
     // 비밀 입력
     document.getElementById('secret-input').addEventListener('keypress', function(e) {
       if (e.key === 'Enter' && this.value.toLowerCase() === '라그마슘') {
-        document.body.style.transition = "all 20s ease";
+        document.body.style.transition = "all 1s ease";
         document.body.style.backgroundColor = "black";
-        
+        alert("✨ 각성 완료: 라그마슘!");
       }
     });
 
@@ -449,7 +449,7 @@
         if (input === savedPassword) {
           post.remove();
         } else {
-          
+          alert("비밀번호가 틀렸습니다.");
         }
       };
 
@@ -493,9 +493,26 @@
       });
     }
   </script>
-
-
-
+<style>
+#mouse-laser {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 6px;
+  background-color: #00ff00;
+  box-shadow: 0 0 25px 12px rgba(0, 255, 0, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transition: left 0.02s linear;
+}
+</style>
+<div id="mouse-laser"></div>
+<script>
+const mouseLaser = document.getElementById("mouse-laser");
+document.addEventListener("mousemove", e => {
+  mouseLaser.style.left = `${e.clientX}px`;
+});
+</script>
 <script>
 let fireCapsule, fireLinkIcon;
 
@@ -853,296 +870,6 @@ document.addEventListener('keydown', function(event) {
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-
-<!-- Particle Generator Effect for "입자구성기" -->
-<style>
-@keyframes beam-shoot {
-  0% { opacity: 0; transform: scaleY(0); }
-  10% { opacity: 1; transform: scaleY(1.2); }
-  50% { opacity: 1; transform: scaleY(1); }
-  100% { opacity: 0; transform: scaleY(0); }
-}
-@keyframes life-form {
-  0% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0; transform: scale(1); }
-}
-#particle-device {
-  position: fixed;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(to right, gold, orange);
-  border-radius: 50% 50% 30% 30%;
-  box-shadow: 0 0 20px gold;
-  z-index: 9999;
-  display: none;
-}
-#beam {
-  position: absolute;
-  top: -300px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 300px;
-  background: linear-gradient(to top, yellow, white);
-  animation: beam-shoot 2s forwards;
-}
-#life {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, #a0ffd8, #ffffff);
-  border-radius: 50%;
-  box-shadow: 0 0 30px #a0ffd8;
-  animation: life-form 4s ease-out forwards;
-  display: none;
-  z-index: 9999;
-}
-</style>
-<div id="particle-device"><div id="beam"></div></div>
-<div id="life"></div>
-<script>
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    const input = document.activeElement;
-    if (input && input.value === "입자구성기") {
-      const device = document.getElementById("particle-device");
-      const life = document.getElementById("life");
-      device.style.display = "block";
-      setTimeout(() => {
-        device.style.display = "none";
-        life.style.display = "block";
-        setTimeout(() => {
-          life.style.display = "none";
-        }, 4000);
-      }, 2000);
-    }
-  }
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ELLA: JS 수동 애니메이션 방식 -->
-<style>
-#tree-bird-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9998;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-#tree-bird-container img {
-  width: 300px;
-  max-width: 80vw;
-}
-#heart-grow {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%) scale(0.1);
-  background: url('heart.svg') no-repeat center center;
-  background-size: contain;
-  opacity: 0;
-  z-index: 10000;
-}
-</style>
-<div id="tree-bird-container">
-  <img src="bird_on_tree.png" alt="Bird on Tree">
-</div>
-<div id="heart-grow"></div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const input = document.getElementById('secret-input');
-  const container = document.getElementById('tree-bird-container');
-  const heart = document.getElementById('heart-grow');
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && input.value.trim() === '나무 새랑해') {
-      container.style.display = "flex";
-      heart.style.display = "block";
-
-      // 수동 애니메이션
-      let start = null;
-      function animateHeart(timestamp) {
-        if (!start) start = timestamp;
-        const progress = (timestamp - start) / 1000; // 초 단위
-
-        if (progress < 3) {
-          const scale = 0.1 + progress * 3; // 점점 커짐
-          const opacity = 1 - progress / 3; // 점점 사라짐
-          heart.style.transform = `translate(-50%, -50%) scale(${scale})`;
-          heart.style.opacity = opacity;
-          requestAnimationFrame(animateHeart);
-        } else {
-          heart.style.display = "none";
-          container.style.display = "none";
-          input.value = "";
-        }
-      }
-
-      requestAnimationFrame(animateHeart);
-    }
-  });
-});
-</script>
-
-
-<!-- ELLA: 나무 새랑해 - JS로 하트 화면 전체 확대 -->
-<style>
-#tree-bird-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9998;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-#tree-bird-container img {
-  width: 300px;
-  max-width: 80vw;
-}
-#heart-grow {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%) scale(0.1);
-  background: url('heart.svg') no-repeat center center;
-  background-size: contain;
-  opacity: 0;
-  z-index: 10000;
-}
-</style>
-<div id="tree-bird-container">
-  <img src="bird_on_tree.png" alt="Bird on Tree">
-</div>
-<div id="heart-grow"></div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const input = document.getElementById('secret-input');
-  const container = document.getElementById('tree-bird-container');
-  const heart = document.getElementById('heart-grow');
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && input.value.trim() === '나무 새랑해') {
-      container.style.display = "flex";
-      heart.style.display = "block";
-
-      let start = null;
-      function animateHeart(timestamp) {
-        if (!start) start = timestamp;
-        const progress = (timestamp - start) / 1000;
-
-        if (progress < 3) {
-          const scale = 0.1 + progress * 6.5; // 최종 scale 약 20
-          const opacity = 1 - progress / 3;
-          heart.style.transform = `translate(-50%, -50%) scale(${scale})`;
-          heart.style.opacity = opacity;
-          requestAnimationFrame(animateHeart);
-        } else {
-          heart.style.display = "none";
-          container.style.display = "none";
-          input.value = "";
-        }
-      }
-
-      requestAnimationFrame(animateHeart);
-    }
-  });
-});
-</script>
-
-
-
-<!-- 비밀 초상화 코드 추가 시작 -->
-<div style="position: fixed; top: 20px; right: 20px; z-index: 9999; text-align: center;">
-    
-</div>
-
-<style>
-@keyframes pop {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-        filter: brightness(1.6) contrast(1.9) hue-rotate(20deg) saturate(2.2);
-    }
-    20%, 24%, 55% {
-        opacity: 0.8;
-        filter: brightness(2.0) contrast(2.2) hue-rotate(50deg) saturate(2.8);
-    }
-    22%, 26% {
-        opacity: 0.6;
-        filter: brightness(1.2) contrast(1.5) hue-rotate(-20deg) saturate(1.5);
-    }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translate(0, 0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -2px); }
-    60% { transform: translate(-1px, 1px); }
-    80% { transform: translate(1px, -1px); }
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-@keyframes fade {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-@keyframes rotate-once {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
-
-<script>
-, 10000);
-    } else {
-        
-    }
-}
-</script>
-<!-- 비밀 초상화 코드 추가 끝 -->
 
 </body>
 </html>
