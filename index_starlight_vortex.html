@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>별빛 소용돌이: 라그마슘 시퀀스</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="vortex"></canvas>
+<script>
+  const canvas = document.getElementById("vortex");
+  const ctx = canvas.getContext("2d");
+  let width, height;
+  let particles = [];
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    const num = 800;
+    particles = [];
+    for (let i = 0; i < num; i++) {
+      particles.push({
+        angle: Math.random() * 2 * Math.PI,
+        radius: Math.random() * Math.min(width, height) / 2,
+        speed: 0.002 + Math.random() * 0.004,
+        size: 1 + Math.random() * 2,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`
+      });
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = "rgba(0, 0, 10, 0.2)";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.save();
+    ctx.translate(width / 2, height / 2);
+
+    for (let p of particles) {
+      p.angle += p.speed;
+      const x = Math.cos(p.angle) * p.radius;
+      const y = Math.sin(p.angle) * p.radius;
+
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 8;
+      ctx.arc(x, y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize", () => {
+    resize();
+    createParticles();
+  });
+
+  resize();
+  createParticles();
+  draw();
+</script>
+</body>
+</html>

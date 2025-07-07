@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>광속여행: 라그마슘 시퀀스</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="space"></canvas>
+  <script>
+    const canvas = document.getElementById('space');
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    let numStars = 1000;
+    let speed = 10;
+
+    function init() {
+      resize();
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width - canvas.width / 2,
+          y: Math.random() * canvas.height - canvas.height / 2,
+          z: Math.random() * canvas.width
+        });
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      let centerX = canvas.width / 2;
+      let centerY = canvas.height / 2;
+
+      for (let i = 0; i < stars.length; i++) {
+        let star = stars[i];
+
+        star.z -= speed;
+        if (star.z <= 0) {
+          star.z = canvas.width;
+          star.x = Math.random() * canvas.width - canvas.width / 2;
+          star.y = Math.random() * canvas.height - canvas.height / 2;
+        }
+
+        let k = 128.0 / star.z;
+        let x = star.x * k + centerX;
+        let y = star.y * k + centerY;
+
+        if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
+          let size = (1 - star.z / canvas.width) * 3;
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
+  </script>
+</body>
+</html>
